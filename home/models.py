@@ -14,3 +14,4 @@ class MedOrganization(models.Model):
     rayon = models.CharField(max_length=255, null=False)
     photo = models.ImageField()
     documents_needed = models.CharField(max_length=255, null=False)
+    rooms = models.CharField(max_length=255, null=True)
