@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
-    'home'
+    'home',
+    'tg_bot'
 ]
 
 MIDDLEWARE = [

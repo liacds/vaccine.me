@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from smtplib import SMTPException
 from django_filters.rest_framework import DjangoFilterBackend
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 
 # Create your views here.
 class OrganizationView(generics.ListAPIView):
@@ -52,3 +53,41 @@ class ContactUsView(APIView):
 
 
 
+class SearchOrganizations(APIView):
+    def post(self,request):
+        type = request.data['type']
+        in_stock= request.data['in_stock']
+        search_query = request.data['search_query']
+        vector = SearchVector('name', 'address', 'rayon', 'extra', config='russian')
+        query = SearchQuery(search_query)
+        if search_query:
+            organizations = MedOrganization.objects.annotate(rank=SearchRank(vector, query)).order_by('-rank')
+        else:
+            organizations = MedOrganization.objects.all()
+        self.search_by_type(type, organizations, in_stock)
+        return Response(Organization_Serializer_Short_View(MedOrganization.objects.all(), many=True).data, HTTP_200_OK)
+
+    def search_by_type(self, type, organizations, in_stock):
+        if type:
+            if type == "I тип":
+                organizations.filter(has_type_1=True)
+                if in_stock:
+                    if in_stock == "В наличии":
+                        organizations.filter(type_1_stock=True)
+                    else:
+                        organizations.filter(type_1_stock=False)
+            elif type == 'II тип':
+                organizations.filter(has_type_2=True)
+                if in_stock:
+                    if in_stock == "В наличии":
+                        organizations.filter(type_2_stock=True)
+                    else:
+                        organizations.filter(type_2_stock=False)
+            elif type == 'I и II типы':
+                organizations.filter(has_type_2=True, has_type_1 =True)
+                if in_stock:
+                    if in_stock == "В наличии":
+                        organizations.filter(type_2_stock=True,type_1_stock=True )
+                    else:
+                        organizations.filter(type_2_stock=False, type_1_stock=False)
+        return Response(Organization_Serializer_Short_View(organizations, many=True).data, HTTP_200_OK)
