@@ -17,4 +17,4 @@ class MedOrganization(models.Model):
     photo = models.ImageField()
     documents_needed = models.CharField(max_length=255, null=False)
     rooms = models.CharField(max_length=255, null=True)
-    extra = models.CharField(max_length=255, null=True)
+    extra = models.CharField(max_length=255, null=False)
