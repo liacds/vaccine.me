@@ -29,7 +29,8 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['e13653a3ded1.ngrok.io',
+                 '127.0.0.1']
 
 
 # Application definition
@@ -38,7 +39,8 @@ CORS_ORIGIN_WHITELIST = [
     "http://127.0.0.1:8080",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "http://localhost:3001"
+    "http://localhost:3001",
+
 ]
 
 INSTALLED_APPS = [
