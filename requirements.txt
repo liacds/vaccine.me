@@ -10,3 +10,4 @@ dj-database-url
 gunicorn
 psycopg2-binary
 djangorestframework-jwt
+djangorestframework-simplejwt
