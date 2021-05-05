@@ -6,3 +6,4 @@ psycopg2
 django-filter
 Pillow
 python-telegram-bot
+dj-database-url
