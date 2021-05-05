@@ -31,7 +31,7 @@ class TutorialBotView(View):
             t_chat = t_message["chat"]
             chat_id = t_chat["id"]
             try:
-                text = t_message["text"].strip().lower()
+                text = t_message["text"].strip()
             except Exception as e:
                 return JsonResponse({e: "Error occured"})
             organization = MedOrganization.objects.filter(name=text).first()
@@ -39,7 +39,7 @@ class TutorialBotView(View):
                 text = "Добро пожаловать в бот для Vaccine.me. Здесь вы можете обновить информацию о наличии вакцины"
                 markup = [[update]]
                 self.send_message(text, chat_id, markup)
-            elif text == update.lower():
+            elif text == update:
                 ChatContext.objects.create(user=chat_id)
                 buttons = self.output_all_clinics()
                 self.send_message(text, chat_id, buttons)
@@ -49,9 +49,9 @@ class TutorialBotView(View):
                     chat_context.organization = organization
                     chat_context.save()
                 markup = [[change_type_1], [change_type_2], [change_both]]
-                text = "Выберите тип вакцины"
+                text = "Выберите компонент вакцины"
                 self.send_message(text, chat_id, markup)
-            elif text == change_type_1.lower() or text == change_type_2.lower() or text == change_both.lower():
+            elif text == change_type_1 or text == change_type_2 or text == change_both:
                 chat_context = ChatContext.objects.filter(user=chat_id).first()
                 if chat_context:
                     chat_context.type = text
@@ -59,21 +59,21 @@ class TutorialBotView(View):
                 text = "Статус наличия"
                 markup = [[in_stock], [out_of_stock]]
                 self.send_message(text, chat_id, markup)
-            elif text == in_stock.lower() or text == out_of_stock.lower():
+            elif text == in_stock or text == out_of_stock:
                 chat_context = ChatContext.objects.filter(user=chat_id).first()
                 if chat_context:
                     chat_context.update = text
                     chat_context.save()
-                text = "Хотите ли вы подтвердить свой запорос: клиника " + chat_context.organization.name + ", "  + chat_context.type + ', ' + chat_context.update
+                text = "Хотите ли вы подтвердить свой запрос: клиника " + chat_context.organization.name + ", "  + chat_context.type + ', ' + chat_context.update
                 markup = [[yes], [no]]
                 self.send_message(text, chat_id, markup)
-            elif text == yes.lower():
+            elif text == yes:
                 chat_context = ChatContext.objects.filter(user=chat_id).first()
                 self.handle_change_request(chat_context)
                 text = "Спасибо, ваш запрос получен"
                 markup = [[update]]
                 self.send_message(text, chat_id,markup)
-            elif text == no.lower():
+            elif text == no:
                 chat_context = ChatContext.objects.filter(user=chat_id).first()
                 if chat_context:
                     chat_context.delete()
@@ -116,15 +116,15 @@ class TutorialBotView(View):
             organization = chat_context.organization
             type = chat_context.type
             update = chat_context.update
-            if type ==change_type_1.lower():
-                if update == in_stock.lower():
+            if type ==change_type_1:
+                if update == in_stock:
                     organization.type_1_stock = True
-                if update == out_of_stock.lower():
+                if update == out_of_stock:
                     organization.type_1_stock = False
-            elif type ==change_type_2.lower():
-                if update == in_stock.lower():
+            elif type ==change_type_2:
+                if update == in_stock:
                     organization.type_2_stock = True
-                if update == out_of_stock.lower():
+                if update == out_of_stock:
                     organization.type_2_stock = False
             organization.save()
             chat_context.delete()
