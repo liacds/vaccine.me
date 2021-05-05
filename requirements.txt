@@ -12,3 +12,4 @@ psycopg2-binary
 djangorestframework-jwt
 djangorestframework-simplejwt
 requests
+django_s3_storage

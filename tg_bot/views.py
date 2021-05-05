@@ -72,7 +72,7 @@ class TutorialBotView(View):
                 self.send_message(text, chat_id, markup)
             elif text == yes:
                 chat_context = ChatContext.objects.filter(user=chat_id).first()
-                logging.info("Bot update: " + chat_context.organization + ', ' + chat_context.type + ', '+ update )
+                logging.info("Bot update: " + chat_context.organization.name + ', ' + chat_context.type + ', '+ update )
                 self.handle_change_request(chat_context)
                 text = "Спасибо, ваш запрос получен"
                 markup = [[update]]
