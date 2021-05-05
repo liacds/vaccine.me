@@ -16,7 +16,7 @@ import sys
 import dj_database_url
 from django.core.management.utils import get_random_secret_key
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Initialise environment variables
 env = environ.Env()
@@ -152,11 +152,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+# Add these new lines
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
