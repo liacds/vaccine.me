@@ -58,7 +58,7 @@ class SearchOrganizations(APIView):
         type = request.data['type']
         in_stock= request.data['in_stock']
         search_query = request.data['search_query']
-        vector = SearchVector('name', 'address', 'rayon', 'extra', config='russian')
+        vector = SearchVector('name', 'address', 'rayon', 'city', 'extra', config='russian')
         query = SearchQuery(search_query)
 
         if search_query:

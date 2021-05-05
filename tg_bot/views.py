@@ -10,6 +10,8 @@ from django.views import View
 import json
 from home.models import MedOrganization
 from .models import ChatContext
+import logging
+logging.basicConfig(level=logging.INFO)
 
 TELEGRAM_URL = "https://api.telegram.org/bot"
 TUTORIAL_BOT_TOKEN = os.environ.get("TUTORIAL_BOT_TOKEN")
@@ -65,10 +67,12 @@ class TutorialBotView(View):
                     chat_context.update = text
                     chat_context.save()
                 text = "Хотите ли вы подтвердить свой запрос: клиника " + chat_context.organization.name + ", "  + chat_context.type + ', ' + chat_context.update
+                self.change_text = text
                 markup = [[yes], [no]]
                 self.send_message(text, chat_id, markup)
             elif text == yes:
                 chat_context = ChatContext.objects.filter(user=chat_id).first()
+                logging.info("Bot update: " + chat_context.organization + ', ' + chat_context.type + ', '+ update )
                 self.handle_change_request(chat_context)
                 text = "Спасибо, ваш запрос получен"
                 markup = [[update]]
