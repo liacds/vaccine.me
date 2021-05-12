@@ -15,6 +15,7 @@ import environ
 import sys
 import dj_database_url
 from django.core.management.utils import get_random_secret_key
+from corsheaders.defaults import default_headers
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -34,7 +35,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
-
+CORS_ALLOW_HEADERS = default_headers + ('cache-control',)
 # Application definition
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8080",
