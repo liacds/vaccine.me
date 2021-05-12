@@ -35,8 +35,8 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
-CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
-                      'content-type', 'accept', 'origin', 'authorization')
+CORS_ALLOW_HEADERS = ('Content-Disposition', 'Accept-Encoding',
+                      'Content-Type', 'Accept', 'Origin', 'Authorization')
 # Application definition
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8080",
