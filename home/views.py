@@ -59,11 +59,9 @@ class SearchOrganizations(APIView):
         in_stock= request.data['in_stock']
         search_query = request.data['search_query']
         vector = SearchVector('name', 'address', 'rayon', 'city', 'extra', config='russian')
-        query = SearchQuery(search_query)
+        query = SearchQuery(search_query, config='russian')
 
         if search_query:
-            # organizations =  MedOrganization.objects.annotate(
-            #     search=SearchVector('name', 'address', 'rayon', 'extra', config='russian')).filter(search=search_query)
             organizations = MedOrganization.objects.annotate(search=vector).filter(search=query)
         else:
             organizations = MedOrganization.objects.all()
