@@ -44,7 +44,7 @@ class ContactUsView(APIView):
         subject = 'Vaccine.me message'
         message = f' Message from {request.data["name"]}, at {request.data["email"]} \n {request.data["message_content"]}'
         email_from = settings.EMAIL_HOST_USER
-        recipient_list = ['itisaliya@gmail.com' ]
+        recipient_list = ['aliyawwww@gmail.com', 'vaccine.me.kz@gmail.com' ]
         try:
             send_mail(subject, message, email_from, recipient_list)
         except SMTPException as e:

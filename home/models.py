@@ -1,5 +1,7 @@
 from django.db import models
+from django_s3_storage.storage import S3Storage
 
+storage = S3Storage(aws_s3_bucket_name='vaccme')
 # Create your models here.
 class MedOrganization(models.Model):
     name = models.CharField(max_length=255, null=False)
@@ -14,7 +16,7 @@ class MedOrganization(models.Model):
     website = models.URLField(max_length=128, null = True)
     twogis_link = models.URLField(max_length=128, null = True)
     rayon = models.CharField(max_length=255, null=True)
-    photo = models.ImageField(null=True)
+    photo = models.ImageField(storage=storage, null=True)
     documents_needed = models.CharField(max_length=255, null=True)
     rooms = models.CharField(max_length=255, null=True)
     extra = models.CharField(max_length=255, null=True)

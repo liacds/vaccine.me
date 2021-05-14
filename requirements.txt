@@ -12,3 +12,4 @@ djangorestframework-jwt
 djangorestframework-simplejwt
 requests
 whitenoise
+django-s3-storage

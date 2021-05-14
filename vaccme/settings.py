@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'home',
     'tg_bot',
     'django.contrib.postgres',
+    'django_s3_storage'
 
 ]
 
@@ -179,3 +180,16 @@ EMAIL_USE_TLS = True
 CSRF_COOKIE_SECURE=False
 SESSION_COOKIE_SECURE=False
 SECURE_SSL_REDIRECT=False
+
+#AWS
+DEFAULT_FILE_STORAGE="django_s3_storage.storage.S3Storage"
+AWS_REGION = "ap-south-1"
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_S3_BUCKET_NAME = "vaccme"
+AWS_S3_ADDRESSING_STYLE = "auto"
+AWS_S3_ENDPOINT_URL = ""
+AWS_S3_KEY_PREFIX = ""
+AWS_S3_BUCKET_AUTH = True
+AWS_S3_MAX_AGE_SECONDS = 60 * 60*24
+AWS_S3_PUBLIC_URL = ""
